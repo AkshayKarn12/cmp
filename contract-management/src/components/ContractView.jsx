@@ -30,18 +30,18 @@ const ContractView = ({ contract, blueprint, onClose, onUpdateStatus }) => {
   const nextStatuses = getNextStatuses(contract.status);
 
   return (
-    <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 max-w-3xl mx-auto border border-white/20">
+    <div className="card max-w-3xl">
       <div className="flex justify-between items-start mb-8">
         <div>
-          <h2 className="text-3xl font-bold mb-3 text-gray-800">{contract.name}</h2>
+          <h2 className="title mb-3">{contract.name}</h2>
           <p className="text-indigo-600 text-lg">Blueprint: <span className="font-semibold">{contract.blueprintName}</span></p>
         </div>
-        <button onClick={onClose} className="p-3 text-gray-500 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-110">
+        <button onClick={onClose} className="btn btn-ghost p-3">
           <X size={28} />
         </button>
       </div>
 
-      <div className="mb-8 p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
+      <div className="mb-8 field">
         <div className="flex items-center justify-between">
           <div>
             <span className="text-lg font-semibold text-gray-700">Status:</span>
@@ -70,10 +70,10 @@ const ContractView = ({ contract, blueprint, onClose, onUpdateStatus }) => {
       )}
 
       <div className="space-y-6 mb-8">
-        <h3 className="text-2xl font-bold text-gray-800">Contract Details</h3>
+        <h3 className="title">Contract Details</h3>
         {blueprint.fields.map(field => (
-          <div key={field.id} className="p-6 bg-gradient-to-r from-white to-indigo-50/50 rounded-xl border border-gray-100 hover:shadow-lg transition-all duration-200">
-            <label className="block text-lg font-semibold text-gray-700 mb-3">{field.label}</label>
+          <div key={field.id} className="field">
+            <label className="subtitle mb-3">{field.label}</label>
             <div className="text-gray-900 text-lg">
               {field.type === 'Checkbox'
                 ? (contract.fieldValues[field.id] ? '✓ Checked' : '✗ Unchecked')
@@ -88,17 +88,13 @@ const ContractView = ({ contract, blueprint, onClose, onUpdateStatus }) => {
 
       {nextStatuses.length > 0 && (
         <div className="mb-8">
-          <h3 className="text-2xl font-bold mb-6 text-gray-800">Available Actions</h3>
+          <h3 className="title mb-6">Available Actions</h3>
           <div className="flex gap-4 flex-wrap">
             {nextStatuses.map(status => (
               <button
                 key={status}
                 onClick={() => onUpdateStatus(contract.id, status)}
-                className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg ${
-                  status === 'Revoked'
-                    ? 'bg-gradient-to-r from-red-500 to-pink-600 text-white hover:from-red-600 hover:to-pink-700'
-                    : 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700'
-                }`}
+                className={`btn ${status === 'Revoked' ? 'btn-danger' : 'btn-primary'}`}
               >
                 {status === 'Revoked' ? 'Revoke Contract' : `Mark as ${status}`}
               </button>
@@ -109,7 +105,7 @@ const ContractView = ({ contract, blueprint, onClose, onUpdateStatus }) => {
 
       <button
         onClick={onClose}
-        className="w-full px-8 py-4 bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 font-bold text-lg transition-all duration-300 transform hover:scale-105"
+        className="btn btn-ghost w-full"
       >
         Close
       </button>
